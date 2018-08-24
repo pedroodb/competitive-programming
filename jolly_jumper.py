@@ -9,14 +9,14 @@ def jolly(lista):
         if not i:
             return False
     return True
-
-while True:
-    lista = input()
-    if lista:
-        lista = lista.split(" ")
-        if(jolly(lista)):
-            print("Jolly")
-        else:
-            print("Not jolly")
-    else:
-        break
+try:
+    while True:
+        lista = input()
+        if lista:
+            lista = lista.split(" ")
+            if(jolly(lista)):
+                print("Jolly")
+            else:
+                print("Not jolly")
+except EOFError:
+    pass
