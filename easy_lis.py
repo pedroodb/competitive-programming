@@ -11,11 +11,10 @@ def lis(pos):
             if int(lista[i])<int(lista[pos]):
                 if  lis(i)+1 > memo[pos]:
                     memo[pos] = lis(i)+1
-            elif lis(i) > memo[pos]:
-                memo[pos] = lis(i)
     return memo[pos]
 
 
-
-print(lis(size-1))
-print(memo)
+liss = []
+for i in range(0,size):
+    liss.append(lis(i))
+print(max(liss))
