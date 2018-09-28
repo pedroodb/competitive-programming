@@ -1,7 +1,6 @@
 size = int(input())
 lista = input().split(' ')
 memo = [-1]*size
-prev = [-1]*size
 memo[0] = 1
 
 def lis(pos):
