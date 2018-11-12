@@ -29,15 +29,21 @@ class UnionFind:
                 if self.rank[x] == self.rank[y]:
                     self.rank[y] += 1
 
-def mst(aristas, nodos):
-    aristas = sorted(aristas, key=lambda arista:arista[2])
+def indicesAristasMst(aristas, nodos, excluir = -1):
     ufds = UnionFind(nodos)
-    aristasMst = []
-    for arista in aristas:
-        if not ufds.is_same_set((arista[0] - 1), (arista[1] - 1)):
-            ufds.union((arista[0] - 1), (arista[1] - 1))
-            aristasMst.append(arista)
-    return aristasMst
+    indicesAristasMst = []
+    for numArista in range(len(aristas)):
+        if not excluir == numArista :
+            if not ufds.is_same_set((aristas[numArista][0] - 1), (aristas[numArista][1] - 1)):
+                ufds.union((aristas[numArista][0] - 1), (aristas[numArista][1] - 1))
+                indicesAristasMst.append(numArista)
+    return (indicesAristasMst)
+
+def pesosAristas(aristasTotal, aristasAPesar):
+    total = 0
+    for index in aristasAPesar:
+        total += aristasTotal[index][2]
+    return total
 
 casos = int(input())
 for i in range(casos):
@@ -45,6 +51,10 @@ for i in range(casos):
     aristas = []
     for i in range(cantAristas):
         aristas.append(list(map(int,input().split(' '))))
-    aristasMst = mst(aristas,cantNodos)
-    print(sum([arista[2] for arista in aristasMst]))
+    aristas = sorted(aristas, key=lambda arista:arista[2])
+    aristasMst = indicesAristasMst(aristas,cantNodos)
+    msts = []
+    for j in aristasMst:
+        msts.append(pesosAristas(aristas,indicesAristasMst(aristas, cantNodos, j)))
+    print(pesosAristas(aristas, aristasMst),' ',min(msts))
 

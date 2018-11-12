@@ -1,0 +1,1 @@
+cantVertices = int(input())
