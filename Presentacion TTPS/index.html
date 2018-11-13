@@ -74,7 +74,49 @@
 						</ul>
 					</section>
 				</section>
-			</div>
+				<section>
+					<section>
+						<h3>Entonces.. Programación dinámica</h3>
+						<ul>
+							<li class="fragment">Podemos usar una matriz y precalcular si una posición es ganadora o perdedora</li>
+							<li class="fragment">Para reutilizarla en los distintos casos de prueba debería ser del tamaño maximo, y el N y M de la entrada indicarían la posición en esa matriz</li>
+							<li class="fragment">Pero para esto la matriz debería ser de hasta 10^6 x 10^6...</li>
+						</ul>
+					</section>
+					<section>
+						<li>Se puede observar un patron en como se organizan los valores de la tabla</li>
+						<li class="fragment">Dado que solo se puede avanzar 2 casilleros a la derecha o 3 hacia arriba, y el estar en una posicion ganadora o perdedora depende de las casillas que pueda alcanzar</li>
+						<li class="fragment">Se repetiran los valores en un rango de 3x4</li>
+					</section>
+					<section>
+						<li>Precalculando los valores para ese rango solo es cuestión de saber "en que posición ubicarnos"</li>
+						<li class="fragment">Entonces la solución pasa a tener orden constante (en funcion de la distancia que se pueda mover la ficha, que en el caso del problema es fijo)</li>
+					</section>
+					<section>
+						<h3>Solución final:</h3>
+						<pre><code class="hljs" data-trim contenteditable>
+							from functools import reduce
+
+							def movimientos(i,j):
+								for movsI in range(0,i):
+									yield (movsI,j)
+								for movsJ in range(0,j):
+									yield (i,movsJ)
+							
+							def posicionGanadora(i,j,memo):
+								if memo[i][j] is None:
+									memo[i][j] = reduce(lambda res, sigMov: res or not posicionGanadora(sigMov[0],sigMov[1],memo), movimientos(i,j), False)
+								return memo[i][j]
+							
+							testCases = int(input())
+							memo = [[None for i in range(3)] for j in range(4)]
+							for tc in range(testCases):
+								n,m = list(map(int,input().split(' ')))
+								print('Tuzik' if posicionGanadora((n-1) % 4, (m-1) % 3, memo) else 'Vanya')
+						</code></pre>
+					</section>
+				</section>
+				</div>
 		</div>
 
 		<script src="lib/js/head.min.js"></script>
