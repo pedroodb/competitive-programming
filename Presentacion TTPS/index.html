@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+		<title>Puppy and the Board</title>
 
 		<link rel="stylesheet" href="css/reveal.css">
 		<link rel="stylesheet" href="css/theme/black.css">
@@ -47,6 +47,32 @@
 					<h3>Problema:</h3>
 					<p>Dados M y N que indican las dimensiones de la tabla, imprimir cual sera el jugador ganador, 
 						en caso de que ambos hicieran la mejor jugada posible.</p>
+				</section>
+				<section>
+					<h3>Datos conocidos:</h3>
+					<ul>
+						<span class="fragment"><li>Existe una sola posicion terminal, cuando el jugador se encuentra en el extremo de la tabla, y esta es una <span class="fragment highlight-red">posicion perdedora</span></li></span>
+						<span class="fragment"><li>Si en nuestro turno podemos alcanzar una posicion perdedora, estamos en una <span class="fragment highlight-red">posicion ganadora</span></li></span>
+						<span class="fragment"><li>Si desde nuestra posicion solo podemos alcanzar posiciones ganadoras, estamos en una <span class="fragment highlight-red">posicion perdedora</span></li></span>
+					</ul>
+				</section>
+				<section>
+					<section>
+						<ul>
+							<li>Para saber si estamos parados en una posicion ganadora entonces podemos preguntar si alguna de las 5 posiciones a las que 
+							podemos movernos es una posicion perdedora, y para saber esto preguntar recursivamente con cada una de estas 5</li>
+						</ul>
+						<pre><code class="hljs" data-trim contenteditable>
+								def posicionGanadora(i,j):
+									return reduce(lambda res, sigMov: res or not posicionGanadora(sigMov[0],sigMov[1]), movimientos(i,j), False)
+						</code></pre>
+					</section>
+					<section>
+						<ul>
+							<li>Esta implementacion es de orden O(t.(max(n,m)^5))</li>
+							<li>Con T<=100 y N,M<=10^6 puede llegar a haber 10^32 operaciones...</li>
+						</ul>
+					</section>
 				</section>
 			</div>
 		</div>
