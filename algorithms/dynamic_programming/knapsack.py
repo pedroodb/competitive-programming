@@ -14,3 +14,5 @@ elems = []
 for i in range(n):
     elems.append(list(map(int,input().split(' '))))
 print(knapsack(elems,ms))
+
+#Todavia no funciona no se xq xq xq xqxqxqxxq
