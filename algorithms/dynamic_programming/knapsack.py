@@ -22,9 +22,10 @@ def knapsackBU(elems,maxWeight):
 
 #Expects an element list (elems) as a couple (weight,value)
 
-#Input format example
-'''maxWeight,n = list(map(int,input().split(' ')))
-elems = []
-for i in range(n):
-    elems.append(list(map(int,input().split(' '))))
-print(knapsackBU(elems,maxWeight))'''
+#---------------------------------------------- Input format example ----------------------------------------------
+
+#maxWeight,n = list(map(int,input().split(' ')))
+#elems = []
+#for i in range(n):
+#    elems.append(list(map(int,input().split(' '))))
+#print(knapsackBU(elems,maxWeight))'''
