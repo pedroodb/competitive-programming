@@ -1,4 +1,4 @@
-#Implementacion recursiva top-down
+#Top-down recursive implementation
 
 def auxKnapsackTD(weightLeft,value,idx,l,memo):
     if weightLeft <= 0 or idx == len(l):
@@ -11,7 +11,7 @@ def knapsackTD(elems,maxWeight):
     memo = [[[None] for _ in range(len(elems))]for i in range(maxWeight + 1)]
     return auxKnapsackTD(maxWeight,0,0,elems,memo)
 
-#Implementacion iterativa bottom-up
+#Bottom-up iterative implementation 
 
 def knapsackBU(elems,maxWeight):
     memo = [[0 for _ in range(maxWeight + 1)]for _ in range(len(elems)+1)]
@@ -20,10 +20,11 @@ def knapsackBU(elems,maxWeight):
             memo[i][j] = max(memo[i-1][j],elems[i-1][1]+memo[i-1][j-elems[i-1][0]] if elems[i-1][0] <= j else 0)
     return memo[len(memo)-1][len(memo[0])-1]
 
-#Esta formateado para recibir una lista de elementos 'elems' con la forma de un par (peso,valor)
-   
-maxWeight,n = list(map(int,input().split(' ')))
+#Expects an element list (elems) as a couple (weight,value)
+
+#Input format example
+'''maxWeight,n = list(map(int,input().split(' ')))
 elems = []
 for i in range(n):
     elems.append(list(map(int,input().split(' '))))
-print(knapsackBU(elems,maxWeight))
+print(knapsackBU(elems,maxWeight))'''
