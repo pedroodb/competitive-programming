@@ -1,4 +1,4 @@
-class UnionFind:
+class UFDS:
 
     def __init__(self, n):
         self.num_sets = n
