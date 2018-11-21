@@ -228,7 +228,7 @@ class Segment:
         d1 = Point.direction(segment2.getA(), segment2.getB(), self.a)
         d2 = Point.direction(segment2.getA(), segment2.getB(), self.b)
         d3 = Point.direction(self.a, self.b, segment2.getA())
-        d4 = Point.direction(self.a, self.b, segment2.getA())
+        d4 = Point.direction(self.a, self.b, segment2.getB())
         if ( (d1 > 0 and d2 < 0) or (d1 < 0 and d2 > 0) ) and ( (d3 > 0 and d4 < 0) or (d3 < 0 and d4 > 0) ):
             return True
         elif d1 == 0 and Point.onSegment(segment2.getA(), segment2.getB(), self.a):
