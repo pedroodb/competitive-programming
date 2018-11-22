@@ -32,7 +32,7 @@ class Point:
     def onSegment(p1, p2, p3):
         return ((min(p1.getX(), p2.getX()) <= p3.getX() <= max(p1.getX(), p2.getX())) and (min(p1.getY(), p2.getY()) <= p3.getY() <= max(p1.getY(), p2.getY())))
 
-    # Recibe un vector de lineas y devuelve la cantidad maxima de puntos que se encuentran alineados en linea recta
+    # Recibe un vector de puntos y devuelve la cantidad maxima de puntos que se encuentran alineados en linea recta
     @staticmethod
     def pointsAligned(points):
         res = 0
@@ -92,18 +92,27 @@ class Line:
 
     # Retorna la pendiente de la recta
     def pendiente(self):
+        if self.isVertical():
+            return sys.maxsize
+        elif self.isHorizontal():
+            return 0
         return self.a / (-self.b)
 
+    # Retorna la ordenada al origen de la recta
     def ordenada(self):
+        if self.isHorizontal():
+            return - self.c
+        elif self.isVertical():
+            return sys.maxsize
         return self.c / (-self.b)
 
     # Retorna si otra linea es paralela con esta
     def isParallel(self, otherLine):
-        return math.isclose((math.fabs(self.a - otherLine.getA())), 0) and math.isclose(math.fabs(self.b - otherLine.getB()), 0)
+        return self.pendiente() == otherLine.pendiente()
 
     # Retorna si se tratan de la misma linea
     def isSameLine(self, otherLine):
-        return self.isParallel(otherLine) and math.isclose(self.c - otherLine.getC(), 0)
+        return self.isParallel(otherLine) and (self.ordenada() == otherLine.ordenada())
 
     # Retorna si un punto esta sobre la linea
     def pointInLine(self, aPoint):
