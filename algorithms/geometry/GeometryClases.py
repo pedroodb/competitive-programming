@@ -1,4 +1,5 @@
 import math
+import sys
 
 class Point:
     
@@ -30,6 +31,28 @@ class Point:
     @staticmethod
     def onSegment(p1, p2, p3):
         return ((min(p1.getX(), p2.getX()) <= p3.getX() <= max(p1.getX(), p2.getX())) and (min(p1.getY(), p2.getY()) <= p3.getY() <= max(p1.getY(), p2.getY())))
+
+    # Recibe un vector de lineas y devuelve la cantidad maxima de puntos que se encuentran alineados en linea recta
+    @staticmethod
+    def pointsAligned(points):
+        res = 0
+        for p in range(len(points)-1):
+            pend = []
+            for j in range(p+1, len(points)):
+                aux = ((Line.lineByPoints(points[p], points[j])).pendiente() if not points[p].getX() == points[j].getX() else sys.maxsize)
+                pend.append((j, aux))
+            pend = sorted(pend, key = lambda x : x[1])
+            resAct = 0 
+            for k in range(0, j-p-1):
+                if math.isclose(math.fabs(pend[k][1]-pend[k+1][1]), 0):
+                    resAct+=1
+                else:
+                    if resAct > res:
+                        res = resAct
+                    resAct = 0
+            if resAct > res:
+                res = resAct
+        return res + 2 
 
 class Line:
 
