@@ -19,6 +19,7 @@ class Point:
         dy = math.fabs(self.y - otherPoint.getY())
         return math.hypot(dx,dy)  # sqrt(x*x + y*y)
 
+# Cuando la cantidad de puntos de un bloque es <=3 se calcula mediante fuerza bruta.
 def closestPairByBrute(points):
     mi = points[0].distanceToPoint(points[1]) #Distancia entre primeros dos puntos 
     if len(points) == 2:
@@ -35,6 +36,7 @@ def closestPairByBrute(points):
                 p1, p2 = points[i], points[j]
     return p1, p2, mi
 
+# Se fija si los puntos entre la division en bloques tienen una distancia menor que el mejor de adentro los bloques
 def closestSplitPair(pointsOrderByX, pointsOrderByY, delta, bestPair):
     # Me quedo con el x del punto medio 
     middleX = pointsOrderByX[len(pointsOrderByX) // 2].getX()
@@ -52,6 +54,7 @@ def closestSplitPair(pointsOrderByX, pointsOrderByY, delta, bestPair):
                 best = dst
     return bestPair[0], bestPair[1], best
 
+# Metodo recursivo que va calculando por divide and conquer los puntos mas cercanos 
 def closest_pair(pointsOrderByX, pointsOrderByY):
     #Si la cantidad de puntos es menor o igual a tres se puede resolver por furza bruta
     if len(pointsOrderByX) <= 3: 
@@ -62,8 +65,8 @@ def closest_pair(pointsOrderByX, pointsOrderByY):
     rightPointsX = pointsOrderByX[middle:]
     # Se divide los puntos en dos sobre el eje x
     middleX = pointsOrderByX[middle].getX()
-    leftPointsY = list()
-    rightPonitsY = list()
+    leftPointsY = []
+    rightPonitsY = []
     for x in pointsOrderByY:
         if x.getX() <= middleX:
            leftPointsY.append(x)
@@ -87,6 +90,8 @@ def closest_pair(pointsOrderByX, pointsOrderByY):
     else:
         return p3, q3, mi3
 
+# Devuelve los dos puntos que se encuentran mas cerca y la distancia entre ellos en una tupla
+# Solo ordena los puntos sobre los ejes y llama al recursivo
 def closestPairPoints(points):
     pointsOrderByX = sorted(points, key = lambda p : p.getX())
     pointsOrderByY = sorted(points, key = lambda p : p.getY())
@@ -106,3 +111,7 @@ points = [
 print(p1.getX(), " ", p1.getY())
 print(p2.getX(), " ", p2.getY())
 print("Distance: ", min)
+
+# Llamar unicamente a closestPairPoints que utiliza los demas metodos 
+# Devuelve una tupla donde las ubicaciones 0 y 1 son los dos puntos mas cercanos
+# Y el tercer lugar esta la distancia entre ellos
