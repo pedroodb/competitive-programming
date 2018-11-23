@@ -1,4 +1,5 @@
 from ufds import UFDS
+import heapq
 from functools import reduce
 
 #Expects an edgeList as a list of (origin, destiny, weigth) and the amount of nodes in the graph and returns the edges corresponding to the MST of the graph
