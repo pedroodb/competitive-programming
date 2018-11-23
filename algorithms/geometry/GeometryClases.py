@@ -90,7 +90,7 @@ class Line:
     def getC(self):
         return self.c
 
-   def pendiente(self):
+    def pendiente(self):
         if self.isVertical():
             return sys.maxsize
         elif self.isHorizontal():
