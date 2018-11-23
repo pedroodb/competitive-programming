@@ -1,4 +1,7 @@
-class UnionFind:
+from functools import reduce
+import heapq
+
+class UFDS:
 
     def __init__(self, n):
         self.num_sets = n
@@ -29,21 +32,21 @@ class UnionFind:
                 if self.rank[x] == self.rank[y]:
                     self.rank[y] += 1
 
-def indicesAristasMst(aristas, nodos, excluir = -1):
-    ufds = UnionFind(nodos)
-    indicesAristasMst = []
-    for numArista in range(len(aristas)):
-        if not excluir == numArista :
-            if not ufds.is_same_set((aristas[numArista][0] - 1), (aristas[numArista][1] - 1)):
-                ufds.union((aristas[numArista][0] - 1), (aristas[numArista][1] - 1))
-                indicesAristasMst.append(numArista)
-    return (indicesAristasMst)
+def auxNKruskal(edgeList, nodesAmount, foldFunction = (lambda accum, edgeIndex: accum + [(edgeIndex[0],edgeIndex[1])]), accumulator = [], exclude = -1):
+    ufds = UFDS(nodesAmount)
+    for index, edge in enumerate(edgeList):
+        if (not index == exclude) and (not ufds.is_same_set((edge[0] - 1), (edge[1] - 1))):
+            ufds.union((edge[0] - 1), (edge[1] - 1))
+            accumulator = foldFunction(accumulator,(edge,index))
+    return accumulator
 
-def pesosAristas(aristasTotal, aristasAPesar):
-    total = 0
-    for index in aristasAPesar:
-        total += aristasTotal[index][2]
-    return total
+def nKruskal(edgeList, nodesAmount, foldFunction, accumulator, n):
+    edgeList = sorted(edgeList, key = lambda edge: edge[2])
+    mst = auxNKruskal(edgeList, nodesAmount)
+    msts = [reduce(foldFunction, mst, accumulator)]
+    for index in [idx for edge,idx in mst]:
+        heapq.heappush(msts, auxNKruskal(edgeList, nodesAmount, foldFunction, accumulator, index))
+    return msts[:n]
 
 casos = int(input())
 for i in range(casos):
@@ -51,11 +54,5 @@ for i in range(casos):
     aristas = []
     for i in range(cantAristas):
         aristas.append(list(map(int,input().split(' '))))
-    aristas = sorted(aristas, key=lambda arista:arista[2])
-    aristasMst = indicesAristasMst(aristas,cantNodos)
-    msts = []
-    for j in aristasMst:
-        msts.append(pesosAristas(aristas,indicesAristasMst(aristas, cantNodos, j)))
-    print(pesosAristas(aristas, aristasMst),' ',min(msts))
-    pass
-
+    msts = nKruskal(aristas,cantNodos,(lambda acum, edgeIndex: acum+edgeIndex[0][2]),0,2)
+    print(msts[0],' ',msts[1])
