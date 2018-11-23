@@ -90,22 +90,18 @@ class Line:
     def getC(self):
         return self.c
 
-    # Retorna la pendiente de la recta
-    def pendiente(self):
+   def pendiente(self):
         if self.isVertical():
             return sys.maxsize
         elif self.isHorizontal():
             return 0
         return self.a / (-self.b)
 
-    # Retorna la ordenada al origen de la recta
     def ordenada(self):
-        if self.isHorizontal():
-            return - self.c
-        elif self.isVertical():
+        if self.isVertical():
             return sys.maxsize
         return self.c / (-self.b)
-
+        
     # Retorna si otra linea es paralela con esta
     def isParallel(self, otherLine):
         return self.pendiente() == otherLine.pendiente()

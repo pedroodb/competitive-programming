@@ -48,9 +48,7 @@ class Line:
         return self.a / (-self.b)
 
     def ordenada(self):
-        if self.isHorizontal():
-            return - self.c
-        elif self.isVertical():
+        if self.isVertical():
             return sys.maxsize
         return self.c / (-self.b)
 
@@ -74,12 +72,19 @@ class Line:
 
     # Retorna el punto de interseccion entre las rectas, en caso de no haber retorna False
     def pointInterseccion(self, otherLine):
+        if self.isSameLine(otherLine): 
+            return "LINE"
         if self.isParallel(otherLine):
-            if self.isSameLine(otherLine): 
-                return "LINE"
             return "NONE"
         x = (otherLine.getB() * self.c - self.b * otherLine.getC()) / (otherLine.getA() * self.b - self.a * otherLine.getB())
-        y = -(self.a * x + self.c) / self.b if not math.isclose(math.fabs(self.b), 0) else - (((self.a * x) + otherLine.getC()) / otherLine.getB())
+        if not math.isclose(math.fabs(self.b), 0):
+            y = -((self.a * x )+ self.c) / self.b
+        else:
+            y = - ((self.a * x) + otherLine.getC()) / otherLine.getB()
+        if y == 0:
+            y = math.fabs(y)
+        if x == 0:
+            x = math.fabs(x)
         return "POINT " + str("%.2f" % x) + " " + str("%.2f" % y)
 
 testCases = int(input())
@@ -88,7 +93,10 @@ for i in range(testCases):
     ent = list(map(int, input().split(" ")))
     line1 = Line.lineByPoints(Point(ent[0], ent[1]), Point(ent[2], ent[3]))
     line2 = Line.lineByPoints(Point(ent[4], ent[5]), Point(ent[6], ent[7]))
-    print(line1.pointInterseccion(line2))
+    # if not line1.isVertical():
+    #     print(line1.pointInterseccion(line2))
+    # else:
+    print(line2.pointInterseccion(line1))
 print("END OF OUTPUT")
 
 # Tiene un solo error cuando una linea es vertical y la otra horizontal en el punto de interseccion
