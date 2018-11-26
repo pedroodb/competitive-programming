@@ -13,6 +13,7 @@ def editDistance(str1,str2,delCost,insCost,editCost):
     return memo[-1][-1]
 
 #Bottom-up iterative implementation including path
+#Not fully working
 
 def editDistanceWithPath(str1,str2,delCost,insCost,editCost):
     memo = [[[0, []] for _ in range(len(str2)+1)] for _ in range(len(str1)+1)]
@@ -34,11 +35,3 @@ def editDistanceWithPath(str1,str2,delCost,insCost,editCost):
                     mincost[0] = memo[i][j-1][0]+insCost
                     mincost[1] += [("a", str2[j-1])]
     return memo[-1][-1]
-
-
-#No entra en spoj, preguntar
-#Preguntar como se guardaria el recorrido
-
-tc = int(input())
-for t in range(tc):
-    print(editDistanceWithPath(input(),input(),1,1,1))

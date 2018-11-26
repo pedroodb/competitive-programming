@@ -2,6 +2,7 @@ import sys
 
 INF = sys.maxsize
   
+#Expects a graph as an adjacency matrix
 def floyd(graph,prev):
     v = len(graph) 
     for k in range(v): 

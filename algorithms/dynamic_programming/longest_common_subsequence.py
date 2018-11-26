@@ -1,5 +1,4 @@
 #Bottom-up iterative implementation 
-#Preguntar en caso de letras repetidas
 
 def lcs(str1,str2):
     memo = [[0 for _ in range(len(str2)+1)] for _ in range(len(str1)+1)]
