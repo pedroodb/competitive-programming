@@ -1,19 +1,3 @@
-'''
-To keep it simple, we will use a 2-dimensional array for storing 
-the capacities of the residual network that we are left with 
-after each step in the algorithm. Initially the residual network 
-is just the original network. We will not store the flows along 
-the edges explicitly, but it’s easy to figure out how to find 
-them upon the termination of the algorithm: for each edge x-y 
-in the original network the flow is given by the capacity of 
-the backward edge y-x in the residual network. 
-Be careful though; if the reversed arc y-x also exists in the 
-original network, this will fail, and it is recommended that the 
-initial capacity of each arc be stored somewhere, and then the 
-flow along the edge is the difference between the initial and 
-the residual capacity.
-'''
-
 import queue
 
 V = 201
@@ -29,7 +13,6 @@ def maxFlow(s,t):
     while pathCapacity != 0:
 
         flow += pathCapacity
-        #Update residual capacities
         where = t
         while prev[where] != -1:
             capacities[prev[where]][where] -= pathCapacity
@@ -47,7 +30,6 @@ def findPath(s,t,prev):
     q.put(s)
     while not q.empty():
         v = q.get()
-        # Sink is the last vertex
         if v == t:
             break
         visited[v] = True
@@ -57,7 +39,6 @@ def findPath(s,t,prev):
             prev[adj] = v
             q.put(adj)
 
-    #Get pathCapacity as the lowest capacity from edges in the path
     pathCapacity = 0
     where = t
     while prev[where] != -1:
