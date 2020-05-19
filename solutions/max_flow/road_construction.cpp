@@ -73,18 +73,19 @@ void findCycle(vector<bool> &inCycle, int N, vector<vector<int>> &adj) {
     } else {
       parent[u] = pt;
       int v = u;
-      do {
+      inCycle[v] = true;
+      v = parent[v];
+      while (u != v) {
         inCycle[v] = true;
         v = parent[v];
-      } while (u != v);
+      }
       break;
     }
 
     for (int v : adj[u]) {
-      if (v == pt) {
-        continue;
+      if (v != pt) {
+        dfs.push(make_pair(v, u));
       }
-      dfs.push(make_pair(v, u));
     }
   }
 }
