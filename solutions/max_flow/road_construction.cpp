@@ -111,7 +111,7 @@ int main() {
   vector<int> roads(N);
   // materialsForRoad: el camino de la ciudad i se puede construir con los materiales de materialsForRoad[i]
   vector<vector<int>> materialsForRoad(N);
-  // adjCities: lista de adjacencias en grafo de ciudades y caminos
+  // adjCities: lista de adyacencias en grafo de ciudades y caminos
   vector<vector<int>> adjCities(N);
 
   for (int i = 0; i < N; ++i) {
@@ -173,6 +173,7 @@ int main() {
     }
   }
 
+  // Conecta los nodos de los materiales con el destino 
   for (int i = 0; i < materialToIndex.size(); ++i) {
     addEdge(N+2+i, sink, workers[i]);
   }
