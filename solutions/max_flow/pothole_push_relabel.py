@@ -47,7 +47,6 @@ def max_flow():
     excess = [0 for i in range(N)]
 
     excess[0] = sum(capacities[0])
-    originalExcess = excess[0]
 
     for i in range(1,N):
         push(0, i)
@@ -59,7 +58,7 @@ def max_flow():
         if (u != 0 and u != N-1):
             discharge(u)
 
-    return originalExcess - excess[0]
+    return excess[N-1]
 
 def resetGraph():
     for i in range(N):
